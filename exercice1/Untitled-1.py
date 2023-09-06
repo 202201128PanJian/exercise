@@ -1,21 +1,29 @@
-def count_and_replace(file_path):
-    # Read the input file
-    with open(file_path, 'r') as file:
-        text = file.read()
+def count_and_replace():
+    input_file = "file_to_read.txt"
+    output_file = "result.txt"
+    word_to_count = "terrible"
 
-    # Calculate the total occurrences of "terrible"
-    count = text.count('terrible')
+    with open(input_file, "r") as file:
+        content = file.read()
 
-    # Replace even occurrences of "terrible" with "pathetic" and odd occurrences with "marvellous"
-    new_text = text.replace('terrible', 'pathetic', count % 2 == 0)
-    new_text = new_text.replace('terrible', 'marvellous', count % 2 != 0)
+    count = content.count(word_to_count)
 
-    # Write the modified text to a new file
-    with open('result.txt', 'w') as file:
-        file.write(new_text)
+    replaced_content = content.split(word_to_count)
+    for i in range(1, count + 1):
+        if i % 2 == 0:
+            replaced_content[i] = "pathetic" + replaced_content[i]
+        else:
+            replaced_content[i] = "marvellous" + replaced_content[i]
+
+    new_content = "".join(replaced_content)
+
+    # Remove the remaining occurrences of "terrible"
+    new_content = new_content.replace(word_to_count, "")
+
+    with open(output_file, "w") as file:
+        file.write(new_content)
 
     return count
 
-file_path = 'file_to_read.txt'
-occurrences = count_and_replace(file_path)
-print(f'Total occurrences of "terrible": {occurrences}')
+total_count = count_and_replace()
+print("Total occurrences of 'terrible':", total_count)
